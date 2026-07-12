@@ -21,6 +21,11 @@ Establish the initial repository foundation only. Do not implement business feat
 - [x] Formatting configuration
 - [x] Logging foundation
 - [x] Exception handling foundation
+- [x] Backend Clean Architecture package foundation
+- [x] Backend DTOs, domain entities, and repository ports
+- [x] Backend Panache repository implementations
+- [x] Backend BaseResponse, validation mapper, REST configuration, OpenAPI, and health check
+- [x] Backend foundation database migration
 - [x] Project folder structure
 - [x] README update
 - [x] Launch and verification scripts
@@ -28,6 +33,7 @@ Establish the initial repository foundation only. Do not implement business feat
 ## Verification
 
 - [x] Read documentation under `docs/`
+- [x] `mvn -B test`
 - [x] `./scripts/check_all.sh`
 - [x] `flutter build web --release --dart-define=APP_ENV=ci --dart-define=API_BASE_URL=http://localhost:8080/api/v1`
 - [x] `mvn -B package -DskipTests`
@@ -37,10 +43,11 @@ Establish the initial repository foundation only. Do not implement business feat
 
 ## Current Status
 
-Foundation scope is complete and verified except for the Android APK build, which is blocked by the host machine having insufficient disk space. The Android build progressed past project configuration after pinning the valid local NDK version and then failed in the Gradle cache with `No space left on device`.
+Backend infrastructure foundation is complete and verified. Foundation scope remains complete and verified except for the Android APK build, which is blocked by the host machine having insufficient disk space. The Android build progressed past project configuration after pinning the valid local NDK version and then failed in the Gradle cache with `No space left on device`.
 
 ## Notes
 
 - Business features are intentionally not implemented.
+- Backend foundation intentionally adds no business REST APIs.
 - Backend tooling was adjusted so local verification works on the current Java 25 machine while preserving Java 21 compilation.
 - Android is pinned to the valid local NDK `27.1.12297006` because the default NDK path `26.3.11579264` is incomplete on this machine.
