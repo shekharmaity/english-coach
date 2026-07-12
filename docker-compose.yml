@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: english-reading-coach-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-english_reading_coach}
+      POSTGRES_USER: ${POSTGRES_USER:-english_coach}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-english_coach_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-english_coach} -d ${POSTGRES_DB:-english_reading_coach}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend/english-reading-coach-api
+      dockerfile: ../../infrastructure/docker/backend.Dockerfile
+    container_name: english-reading-coach-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-english_reading_coach}
+      DATABASE_USERNAME: ${POSTGRES_USER:-english_coach}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-english_coach_password}
+      JWT_ISSUER: english-reading-coach-local
+      JWT_SIGNING_KEY: local-development-signing-key-change-before-production
+      CORS_ALLOWED_ORIGINS: http://localhost:${FRONTEND_PORT:-5173},http://localhost:3000
+      LOG_LEVEL: INFO
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/q/health/ready"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+
+volumes:
+  postgres_data:
+

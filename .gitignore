@@ -1,0 +1,29 @@
+# Operating system
+.DS_Store
+
+# Environment
+.env
+.env.local
+*.local
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Flutter
+frontend/english_reading_coach/.dart_tool/
+frontend/english_reading_coach/.flutter-plugins
+frontend/english_reading_coach/.flutter-plugins-dependencies
+frontend/english_reading_coach/build/
+frontend/english_reading_coach/android/local.properties
+
+# Java / Maven
+backend/english-reading-coach-api/target/
+backend/english-reading-coach-api/.classpath
+backend/english-reading-coach-api/.project
+backend/english-reading-coach-api/.settings/
+
+# Logs
+*.log
+

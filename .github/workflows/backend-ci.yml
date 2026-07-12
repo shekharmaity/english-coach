@@ -1,0 +1,46 @@
+name: Backend CI
+
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+      - "infrastructure/docker/backend.Dockerfile"
+      - ".github/workflows/backend-ci.yml"
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "backend/**"
+      - "infrastructure/docker/backend.Dockerfile"
+      - ".github/workflows/backend-ci.yml"
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/english-reading-coach-api
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Verify formatting
+        run: mvn -B spotless:check
+
+      - name: Test
+        run: mvn -B test
+
+      - name: Build package
+        run: mvn -B package -DskipTests
+
+      - name: Build Docker image
+        run: docker build -f ../../infrastructure/docker/backend.Dockerfile -t english-reading-coach-api:ci .
+

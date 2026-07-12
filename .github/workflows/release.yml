@@ -1,0 +1,39 @@
+name: Release Build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Build backend
+        working-directory: backend/english-reading-coach-api
+        run: mvn -B package
+
+      - name: Build backend image
+        run: docker build -f infrastructure/docker/backend.Dockerfile -t english-reading-coach-api:${{ github.ref_name }} backend/english-reading-coach-api
+
+      - name: Build frontend web
+        working-directory: frontend/english_reading_coach
+        run: flutter build web --release --dart-define=APP_ENV=production --dart-define=API_BASE_URL=https://api.englishreadingcoach.com/api/v1
+

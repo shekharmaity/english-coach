@@ -1,0 +1,26 @@
+name: Docs CI
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".github/workflows/docs-ci.yml"
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "docs/**"
+      - ".github/workflows/docs-ci.yml"
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check documentation markers
+        run: |
+          ! grep -RInE "TODO|TBD|FIXME|lorem ipsum" docs
+
