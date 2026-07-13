@@ -85,6 +85,17 @@ erDiagram
     timestamptz started_at
     timestamptz completed_at
   }
+
+  reading_session_sentence_events {
+    uuid id PK
+    uuid reading_session_id FK
+    uuid sentence_id FK
+    int sentence_position
+    int elapsed_seconds
+    int words_read
+    timestamptz started_at
+    timestamptz completed_at
+  }
 ```
 
 ## Tables
@@ -261,7 +272,7 @@ Indexes:
 
 ### reading_session_sentence_events
 
-Records sentence-level progress events for analytics and resume behavior.
+Records sentence-level reading events inside a reading session. This supports future progress recovery, sentence timing analysis, and detailed reading history without storing per-word events.
 
 Columns:
 
@@ -269,39 +280,58 @@ Columns:
 - `reading_session_id uuid not null references reading_sessions(id) on delete cascade`
 - `sentence_id uuid not null references sentences(id)`
 - `sentence_position int not null`
+- `elapsed_seconds int not null default 0`
+- `words_read int not null default 0`
 - `started_at timestamptz not null`
 - `completed_at timestamptz`
-- `elapsed_seconds int not null default 0`
+- `created_at timestamptz not null`
+
+Constraints:
+
+- Unique `(reading_session_id, sentence_position)`.
+- `sentence_position > 0`.
+- `elapsed_seconds >= 0`.
+- `words_read >= 0`.
 
 Indexes:
 
 - `reading_session_sentence_events_session_idx`
 - `reading_session_sentence_events_sentence_idx`
+- `reading_session_sentence_events_session_completed_idx`
 
 ### daily_streaks
 
-Stores daily practice history by user-local date.
+Stores per-user daily reading activity by user-local practice date.
 
 Columns:
 
 - `id uuid primary key`
 - `user_id uuid not null references users(id)`
-- `practice_date date not null`
-- `timezone text not null`
+- `streak_date date not null`
 - `sessions_completed int not null default 0`
-- `seconds_read int not null default 0`
 - `words_read int not null default 0`
 - `created_at timestamptz not null`
 - `updated_at timestamptz not null`
 
 Constraints:
 
-- Unique `(user_id, practice_date)`.
-- Counters must be non-negative.
+- Unique `(user_id, streak_date)`.
+- `sessions_completed >= 0`.
+- `words_read >= 0`.
 
 Indexes:
 
 - `daily_streaks_user_date_idx`
+
+## Seed Data
+
+Flyway seeds starter catalog content for local development and early product validation:
+
+- Categories: Daily Conversation, Workplace English, Travel English, Interview Practice.
+- Lessons: eight published beginner or intermediate lessons across the seeded categories.
+- Sentences: four ordered sample sentences per seeded lesson.
+
+Seed rows use stable UUIDs so frontend, backend, and documentation examples can reference deterministic development content.
 
 ## Future Tables
 
@@ -323,4 +353,3 @@ Use Flyway migrations through Quarkus. Every schema change must include:
 - API compatibility review.
 - Index review for changed queries.
 - Documentation update in this file when the conceptual schema changes.
-

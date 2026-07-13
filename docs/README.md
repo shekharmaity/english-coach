@@ -13,6 +13,7 @@ Phase 1 intentionally excludes AI features. The first release must prove that th
 - [ROADMAP.md](ROADMAP.md): Phase, version, and release progression.
 - [ARCHITECTURE.md](ARCHITECTURE.md): System architecture, dependency flow, and package structure.
 - [DATABASE.md](DATABASE.md): Production PostgreSQL schema, relationships, indexes, and future-proofing.
+- [ER_DIAGRAM.md](ER_DIAGRAM.md): Entity relationship diagram, migration map, and index summary.
 - [API_CONTRACT.md](API_CONTRACT.md): REST contract for authentication, lessons, progress, statistics, streaks, and future AI endpoints.
 - [CODING_STANDARDS.md](CODING_STANDARDS.md): Engineering standards for Flutter, Java, Quarkus, and shared conventions.
 - [UI_GUIDELINES.md](UI_GUIDELINES.md): UX rules for the reading experience and responsive behavior.
@@ -83,4 +84,3 @@ Phase 1 excludes:
 ## Documentation Rules
 
 Every material product or architecture change must update this folder in the same pull request. AI agents must read the relevant documents before editing code. When a decision changes, update [DECISIONS.md](DECISIONS.md) with a new ADR rather than silently rewriting history.
-
