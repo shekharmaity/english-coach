@@ -8,6 +8,9 @@ All notable changes to English Reading Coach are recorded here. The format follo
 
 - Initial long-term documentation workspace.
 - Product vision, roadmap, architecture, database, API, testing, security, deployment, and AI-agent prompt documentation.
+- Static responsive Reading Screen UI foundation with local sample data and widget tests.
+- Reading Demo Screen as the default development route, replacing the old foundation page.
+- Simplified Lesson 5 reading demo layout with current-word focus, progress, speed, and font controls.
 
 ### Changed
 
@@ -20,4 +23,3 @@ All notable changes to English Reading Coach are recorded here. The format follo
 ## 0.1.0
 
 Initial planning baseline for English Reading Coach.
-

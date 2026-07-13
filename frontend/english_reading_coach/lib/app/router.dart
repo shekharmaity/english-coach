@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/reading/presentation/reading_screen.dart';
 import '../shared/widgets/app_route_error_screen.dart';
-import '../shared/widgets/foundation_home_screen.dart';
 
 enum AppRoute {
-  home(name: 'home', path: '/');
+  home(name: 'home', path: '/'),
+  readingDemo(name: 'reading-demo', path: '/reading/demo');
 
   const AppRoute({required this.name, required this.path});
 
@@ -22,7 +23,14 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoute.home.path,
         name: AppRoute.home.name,
         builder: (BuildContext context, GoRouterState state) {
-          return const FoundationHomeScreen();
+          return const ReadingScreen();
+        },
+      ),
+      GoRoute(
+        path: AppRoute.readingDemo.path,
+        name: AppRoute.readingDemo.name,
+        builder: (BuildContext context, GoRouterState state) {
+          return const ReadingScreen();
         },
       ),
     ],

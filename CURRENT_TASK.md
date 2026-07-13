@@ -33,6 +33,8 @@ Establish the initial repository foundation only. Do not implement business feat
 - [x] Flutter Riverpod, GoRouter, Material 3, theme, typography, localization, and navigation foundation
 - [x] Flutter shared widgets, base screen, responsive layout, loading state, and error handling
 - [x] Flutter network layer foundation
+- [x] Static responsive Reading Screen UI foundation
+- [x] Lesson 5 Reading Demo Screen replaces the Foundation Ready page for development
 - [x] Project folder structure
 - [x] README update
 - [x] Launch and verification scripts
@@ -44,21 +46,23 @@ Establish the initial repository foundation only. Do not implement business feat
 - [x] `mvn -B package -DskipTests`
 - [x] `flutter analyze`
 - [x] `flutter test`
-- [x] `./scripts/check_all.sh`
 - [x] `flutter build web --release --dart-define=APP_ENV=ci --dart-define=API_BASE_URL=http://localhost:8080/api/v1`
+- [x] `./scripts/check_all.sh`
 - [x] `docker compose config`
 - [x] `docker build -f infrastructure/docker/backend.Dockerfile -t english-reading-coach-api:verify backend/english-reading-coach-api`
 - [ ] `flutter build apk --debug --dart-define=APP_ENV=ci --dart-define=API_BASE_URL=http://localhost:8080/api/v1`
 
 ## Current Status
 
-Database schema, seed data, ER documentation, Flutter foundation, and backend infrastructure foundation are complete and verified. Foundation scope remains complete and verified except for the Android APK build, which is blocked by the host machine having insufficient disk space. The Android build progressed past project configuration after pinning the valid local NDK version and then failed in the Gradle cache with `No space left on device`.
+Static Lesson 5 Reading Demo Screen UI, database schema, seed data, ER documentation, Flutter foundation, and backend infrastructure foundation are complete and verified. Foundation scope remains complete and verified except for the Android APK build, which is blocked by the host machine having insufficient disk space. The Android build progressed past project configuration after pinning the valid local NDK version and then failed in the Gradle cache with `No space left on device`.
 
 ## Notes
 
 - Business features are intentionally not implemented.
 - Backend foundation intentionally adds no business REST APIs.
 - Flutter foundation intentionally adds no business screens.
+- Reading Demo Screen UI uses temporary local Lesson 5 sample data and does not implement synchronized highlighting, timer logic, API calls, authentication, or progress persistence.
+- The old Foundation Ready page has been removed; the app now launches directly into the Reading Demo Screen UI during development.
 - Database seed data is deterministic and intended for local development and early catalog validation.
 - PostgreSQL migration execution could not be validated in this session because no local PostgreSQL server is responding on port `5432`; backend compilation and tests passed.
 - Backend tooling was adjusted so local verification works on the current Java 25 machine while preserving Java 21 compilation.

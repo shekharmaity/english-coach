@@ -21,10 +21,6 @@ class AppLocalizations {
   }
 
   String get appTitle => 'English Reading Coach';
-  String get foundationTitle => 'Foundation Ready';
-  String get foundationBody =>
-      'The Flutter app shell is configured for Web and Android. Business '
-      'features will be added in later tasks.';
   String get environmentLabel => 'Environment';
   String get apiLabel => 'API';
   String get loadingLabel => 'Loading';
